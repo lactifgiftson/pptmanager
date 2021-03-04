@@ -1,13 +1,16 @@
 import React, { Component } from "react";
 import "./App.css";
-import AddEntry from "./components/AddEntry/AddEntry";
+import Home from "./components/Home/Home";
+import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <AddEntry>npm install axios</AddEntry>
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <Home />
+        </div>
+      </BrowserRouter>
     );
   }
 }
