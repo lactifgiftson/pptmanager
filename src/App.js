@@ -31,7 +31,7 @@ class App extends Component {
             textDecoration: "underline",
           }}
         >
-          Add-Post
+          Add Performance Entry
                   </NavLink>
 
         <NavLink

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Aux from "../../hoc/Auxiliary/Auxiliary";
 import axios from "../../axios";
-
+import DatePicker from '../../components/DatePicker/DatePicker';
 class AddEntry extends Component {
   state = {
     teamName: "",
@@ -15,13 +15,14 @@ class AddEntry extends Component {
     QAMembers: "",
     status: '',
     dataCategory: '',
+    selectedCategory: '',
   };
   componentDidMount() {
     axios
       .get("/teams.json")
       .then((response) => {
         this.setState({ teams: response.data });
-        console.log(this.state.teams);
+        console.log(response.data);
       })
       .catch((error) => {
         //console.log(error);
@@ -44,7 +45,7 @@ class AddEntry extends Component {
       TicketDetails: this.state.TicketDetails,
       devMembers: this.state.devMembers,
       QAMembers: this.state.QAMembers,
-      dataCategory: this.state.dataCategory,
+      selectedCategory: this.state.selectedCategory,
     };
     axios
       .post("/entries.json", data)
@@ -55,11 +56,11 @@ class AddEntry extends Component {
   render() {
     let teamList = Object.keys(this.state.teams);
     let teamListOptionItems = teamList.map((data) => (
-      <option value={data} key={data}>{data}</option>
+      <option value={data} key={data}>{this.state.teams[data]}</option>
     ));
     let categoryList = Object.keys(this.state.dataCategory);
     let categoryListOptionItems = categoryList.map((data) => (
-      <option value={data} key={data}>{data}</option>
+      <option value={data} key={data}>{this.state.dataCategory[data]}</option>
     ));
     return (
       <Aux>
@@ -73,16 +74,15 @@ class AddEntry extends Component {
 
           <label>Category</label>
           <select
-            value={this.state.dataCategory}
-            onChange={(event) => this.setState({ dataCategory: event.target.value })}>
+            value={this.state.selectedCategory}
+            onChange={(event) => this.setState({ selectedCategory: event.target.value })}>
             {categoryListOptionItems}</select>
 
           <label>Date</label>
-          <input
-            type="text"
+          <DatePicker
             value={this.state.date}
-            onChange={(event) => this.setState({ date: event.target.value })}
-          />
+            onChange={(event) => this.setState({ date: event.target.value })} />
+
 
           <label>Site Name & Task Summary</label>
           <input
